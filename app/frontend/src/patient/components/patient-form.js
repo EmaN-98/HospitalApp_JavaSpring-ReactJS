@@ -1,16 +1,15 @@
 import React from 'react';
-import validate from "./validators/caregiver-validators";
+import validate from "./validators/patient-validators";
 import Button from "react-bootstrap/Button";
-import * as API_USERS from "../api/caregiver-api";
+import * as API_USERS from "../api/patient-api";
 import APIResponseErrorMessage from "../../commons/errorhandling/api-response-error-message";
 import {Col, Row} from "reactstrap";
 import { FormGroup, Input, Label} from 'reactstrap';
-//import CaregiverService from "../../services";
 
 
 
 
-class CaregiverForm extends React.Component {
+class PatientForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -62,6 +61,24 @@ class CaregiverForm extends React.Component {
                     valid: false,
                     touched: false,
                 },
+                medical_record: {
+                    value: '',
+                    placeholder: 'Medical record...',
+                    valid: false,
+                    touched: false,
+                },
+                caregiverName: {
+                    value: '',
+                    placeholder: 'Caregiver name...',
+                    valid: false,
+                    touched: false,
+                },
+                doctorName: {
+                    value: '',
+                    placeholder: 'Doctor name...',
+                    valid: false,
+                    touched: false,
+                },
                 role: {
                     value: '',
                     placeholder: 'Role...',
@@ -71,7 +88,7 @@ class CaregiverForm extends React.Component {
             }
         };
 
-    
+
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -110,10 +127,10 @@ class CaregiverForm extends React.Component {
 
     };
 
-    registerCaregiver(caregiver) {
-        return API_USERS.postCaregiver(caregiver, (result, status, error) => {
+    registerPatient(patient) {
+        return API_USERS.postPatient(patient, (result, status, error) => {
             if (result !== null && (status === 200 || status === 201)) {
-                console.log("Successfully inserted caregiver with id: " + result);
+                console.log("Successfully inserted patient with id: " + result);
                 this.reloadHandler();
             } else {
                 this.setState(({
@@ -124,32 +141,35 @@ class CaregiverForm extends React.Component {
         });
     }
     
-    updateCaregiver(caregiver) {
-    	console.log(caregiver);
-    	return API_USERS.updateCaregiver(caregiver);
+    updatePatient(patient) {
+    	console.log(patient);
+    	return API_USERS.updatePatient(patient);
     }
     
-    deleteCaregiver(caregiver) {
-    	console.log(caregiver);
-    	return API_USERS.deleteCaregiverById(caregiver);
+    deletePatient(patient) {
+    	console.log(patient);
+    	return API_USERS.deletePatientById(patient);
     }
 
     handleSubmit() {
-        let caregiver = {
+        let patient = {
             id: this.state.formControls.id.value,
             name: this.state.formControls.name.value,
             birthdate: this.state.formControls.birthdate.value,
             gender: this.state.formControls.gender.value,
             address: this.state.formControls.address.value,
+            medical_record: this.state.formControls.medical_record.value,
+            caregiverName: this.state.formControls.caregiverName.value,
+            doctorName: this.state.formControls.doctorName.value,
             role :this.state.formControls.role.value
         };
         
-        console.log(caregiver, this.formType);
+        console.log(patient, this.formType);
         switch(this.formType){
-        	case "insert":this.registerCaregiver(caregiver);console.log("insert form");break;
-        	case "delete":this.deleteCaregiver(caregiver);console.log("delete form");break;
-        	case "update":this.updateCaregiver(caregiver);console.log("update form");break;
-        	default:this.updateCaregiver(caregiver);
+        	case "insert":this.registerPatient(patient);console.log("insert form");break;
+        	case "delete":this.deletePatient(patient);console.log("delete form");break;
+        	case "update":this.updatePatient(patient);console.log("update form");break;
+        	default:this.updatePatient(patient);
         }
         
     }
@@ -214,6 +234,39 @@ class CaregiverForm extends React.Component {
                     />
                 </FormGroup>
                 
+                <FormGroup id='medical_record'>
+                	<Label for='medical_recordFiled'> Medical_record: </Label>
+                	<Input name='medical_record' id='medical_recordField' placeholder={this.state.formControls.medical_record.placeholder}
+                		onChange={this.handleChange}
+                		defaultValue={this.state.formControls.medical_record.value}
+                		touched={this.state.formControls.medical_record.touched? 1 : 0}
+                		valid={this.state.formControls.medical_record.valid}
+                		required
+                	/>
+                </FormGroup>
+            
+                <FormGroup id='caregiverName'>
+                	<Label for='caregiverNameField'> CaregiverName: </Label>
+                	<Input name='caregiverName' id='caregiverNameField' placeholder={this.state.formControls.caregiverName.placeholder}
+                		onChange={this.handleChange}
+                		defaultValue={this.state.formControls.caregiverName.value}
+                		touched={this.state.formControls.caregiverName.touched? 1 : 0}
+                		valid={this.state.formControls.caregiverName.valid}
+                		required
+                	/>
+                </FormGroup>
+                
+                <FormGroup id='doctorName'>
+                	<Label for='doctorNameField'> DoctorName: </Label>
+                	<Input name='doctorName' id='doctorNameField' placeholder={this.state.formControls.doctorName.placeholder}
+                		onChange={this.handleChange}
+            			defaultValue={this.state.formControls.doctorName.value}
+                		touched={this.state.formControls.doctorName.touched? 1 : 0}
+                		valid={this.state.formControls.doctorName.valid}
+            			required
+            		/>
+            	</FormGroup>
+                
                 <FormGroup id='role'>
                 	<Label for='roleField'> Role: </Label>
                 	<Input name='role' id='roleField' placeholder={this.state.formControls.role.placeholder}
@@ -242,4 +295,4 @@ class CaregiverForm extends React.Component {
     }
 }
 
-export default CaregiverForm;
+export default PatientForm;

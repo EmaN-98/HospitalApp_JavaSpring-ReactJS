@@ -1,16 +1,15 @@
 import React from 'react';
-import validate from "./validators/caregiver-validators";
+import validate from "./validators/medication-validators";
 import Button from "react-bootstrap/Button";
-import * as API_USERS from "../api/caregiver-api";
+import * as API_USERS from "../api/medication-api";
 import APIResponseErrorMessage from "../../commons/errorhandling/api-response-error-message";
 import {Col, Row} from "reactstrap";
 import { FormGroup, Input, Label} from 'reactstrap';
-//import CaregiverService from "../../services";
 
 
 
 
-class CaregiverForm extends React.Component {
+class MedicationForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -33,7 +32,7 @@ class CaregiverForm extends React.Component {
                 },
                 name: {
                     value: '',
-                    placeholder: 'What is your name?...',
+                    placeholder: 'What is the name?...',
                     valid: false,
                     touched: false,
                     validationRules: {
@@ -41,33 +40,25 @@ class CaregiverForm extends React.Component {
                         isRequired: true
                     }
                 },
-                birthdate: {
+                sideEffects: {
                     value: '',
-                    placeholder: 'Birthdate...',
-                    valid: false,
-                    touched: false,
-                    //validationRules: {
-                    //    emailValidator: true
-                    //}
-                },
-                gender: {
-                    value: '',
-                    placeholder: 'Gender...',
+                    placeholder: 'Side Effects...',
                     valid: false,
                     touched: false,
                 },
-                address: {
+                dosage: {
                     value: '',
-                    placeholder: 'Address...',
+                    placeholder: 'Dosage...',
                     valid: false,
                     touched: false,
                 },
-                role: {
+                intake_interval: {
                     value: '',
-                    placeholder: 'Role...',
+                    placeholder: 'Intake interval...',
                     valid: false,
                     touched: false,
                 },
+                
             }
         };
 
@@ -110,10 +101,10 @@ class CaregiverForm extends React.Component {
 
     };
 
-    registerCaregiver(caregiver) {
-        return API_USERS.postCaregiver(caregiver, (result, status, error) => {
+    registerMedication(medication) {
+        return API_USERS.postMedication(medication, (result, status, error) => {
             if (result !== null && (status === 200 || status === 201)) {
-                console.log("Successfully inserted caregiver with id: " + result);
+                console.log("Successfully inserted medication with id: " + result);
                 this.reloadHandler();
             } else {
                 this.setState(({
@@ -124,32 +115,31 @@ class CaregiverForm extends React.Component {
         });
     }
     
-    updateCaregiver(caregiver) {
-    	console.log(caregiver);
-    	return API_USERS.updateCaregiver(caregiver);
+    updateMedication(medication) {
+    	console.log(medication);
+    	return API_USERS.updateMedication(medication);
     }
     
-    deleteCaregiver(caregiver) {
-    	console.log(caregiver);
-    	return API_USERS.deleteCaregiverById(caregiver);
+    deleteMedication(medication) {
+    	console.log(medication);
+    	return API_USERS.deleteMedicationById(medication);
     }
 
     handleSubmit() {
-        let caregiver = {
+        let medication = {
             id: this.state.formControls.id.value,
             name: this.state.formControls.name.value,
-            birthdate: this.state.formControls.birthdate.value,
-            gender: this.state.formControls.gender.value,
-            address: this.state.formControls.address.value,
-            role :this.state.formControls.role.value
+            sideEffects: this.state.formControls.sideEffects.value,
+            dosage: this.state.formControls.dosage.value,
+            intake_interval: this.state.formControls.intake_interval.value,
         };
         
-        console.log(caregiver, this.formType);
+        console.log(medication, this.formType);
         switch(this.formType){
-        	case "insert":this.registerCaregiver(caregiver);console.log("insert form");break;
-        	case "delete":this.deleteCaregiver(caregiver);console.log("delete form");break;
-        	case "update":this.updateCaregiver(caregiver);console.log("update form");break;
-        	default:this.updateCaregiver(caregiver);
+        	case "insert":this.registerMedication(medication);console.log("insert form");break;
+        	case "delete":this.deleteMedication(medication);console.log("delete form");break;
+        	case "update":this.updateMedication(medication);console.log("update form");break;
+        	default:this.updateMedication(medication);
         }
         
     }
@@ -181,52 +171,40 @@ class CaregiverForm extends React.Component {
                     <div className={"error-message row"}> * Name must have at least 3 characters </div>}
                 </FormGroup>
 
-                <FormGroup id='birthdate'>
-                    <Label for='birthdateField'> Birthdate: </Label>
-                    <Input name='birthdate' id='birthdateField' placeholder={this.state.formControls.birthdate.placeholder}
+                <FormGroup id='sideEffects'>
+                    <Label for='sideEffectsField'> Birthdate: </Label>
+                    <Input name='sideEffects' id='sideEffectsField' placeholder={this.state.formControls.sideEffects.placeholder}
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.birthdate.value}
-                           touched={this.state.formControls.birthdate.touched? 1 : 0}
-                           valid={this.state.formControls.birthdate.valid}
+                           defaultValue={this.state.formControls.sideEffects.value}
+                           touched={this.state.formControls.sideEffects.touched? 1 : 0}
+                           valid={this.state.formControls.sideEffects.valid}
                            required
                     />
                 </FormGroup>
 
-                <FormGroup id='gender'>
-                <Label for='genderField'> Gender: </Label>
-                <Input name='gender' id='genderField' placeholder={this.state.formControls.gender.placeholder}
+                <FormGroup id='dosage'>
+                <Label for='dosageField'> Gender: </Label>
+                <Input name='dosage' id='dosageField' placeholder={this.state.formControls.dosage.placeholder}
                        onChange={this.handleChange}
-                       defaultValue={this.state.formControls.gender.value}
-                       touched={this.state.formControls.gender.touched? 1 : 0}
-                       valid={this.state.formControls.gender.valid}
+                       defaultValue={this.state.formControls.dosage.value}
+                       touched={this.state.formControls.dosage.touched? 1 : 0}
+                       valid={this.state.formControls.dosage.valid}
                        required
                 />
                 </FormGroup>
             
-                <FormGroup id='address'>
-                    <Label for='addressField'> Address: </Label>
-                    <Input name='address' id='addressField' placeholder={this.state.formControls.address.placeholder}
+                <FormGroup id='intake_interval'>
+                    <Label for='intake_intervalField'> Address: </Label>
+                    <Input name='intake_interval' id='intake_intervalField' placeholder={this.state.formControls.intake_interval.placeholder}
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.address.value}
-                           touched={this.state.formControls.address.touched? 1 : 0}
-                           valid={this.state.formControls.address.valid}
+                           defaultValue={this.state.formControls.intake_interval.value}
+                           touched={this.state.formControls.intake_interval.touched? 1 : 0}
+                           valid={this.state.formControls.intake_interval.valid}
                            required
                     />
                 </FormGroup>
                 
-                <FormGroup id='role'>
-                	<Label for='roleField'> Role: </Label>
-                	<Input name='role' id='roleField' placeholder={this.state.formControls.role.placeholder}
-                		onChange={this.handleChange}
-                		defaultValue={this.state.formControls.role.value}
-                		touched={this.state.formControls.role.touched? 1 : 0}
-                		valid={this.state.formControls.role.valid}
-                		required
-                     />
-                </FormGroup>
-                
-            
-
+               
                     <Row>
                         <Col sm={{size: '4', offset: 8}}>
                             <Button type={"submit"}  onClick={this.handleSubmit}>  Submit </Button>
@@ -242,4 +220,4 @@ class CaregiverForm extends React.Component {
     }
 }
 
-export default CaregiverForm;
+export default MedicationForm;
