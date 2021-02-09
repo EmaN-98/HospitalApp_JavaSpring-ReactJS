@@ -11,6 +11,7 @@ import {
     Row
 } from 'reactstrap';
 import CaregiverForm from "./components/caregiver-form";
+//import CaregiverForm2 from "./components/caregiver-form2";
 import * as API_USERS from "./api/caregiver-api"
 import CaregiverTable from "./components/caregiver-table";
 
@@ -69,16 +70,19 @@ class CaregiverContainer extends React.Component {
     insertForm = ()=>{
     	this.formType="insert";
     	this.toggleForm();
+    	//document.getElementByID('some_form').value = 'insert'
     }
     
     deleteForm = ()=>{
     	this.formType="delete";
     	this.toggleForm();
+    	//document.getElementByID('some_form').value = 'delete'
     }
     
     updateForm = ()=>{
     	this.formType="update";
     	this.toggleForm();
+    	//document.getElementByID('some_form').value = 'update'
     }
     
     render() {
@@ -91,11 +95,9 @@ class CaregiverContainer extends React.Component {
                     <br/>
                     <Row>
                         <Col sm={{size: '8', offset: 1}}>
-                            <Button color="primary" onClick={this.insertForm}>Insert Caregiver </Button>
-                            <Button color="primary" onClick={this.deleteForm}>Delete Caregiver </Button>
-                            //<Button color="primary" onClick={this.toggleForm}>Get Caregiver </Button>
-                            //<Button color="primary" onClick={this.toggleForm}>Get Caregivers </Button>
-                            <Button color="primary" onClick={this.updateForm}>Update Caregiver </Button>
+                            <Button id='insrt' color="primary" onClick={this.insertForm}>Insert Caregiver </Button>
+                            <Button id='dlt' color="primary" onClick={this.deleteForm}>Delete Caregiver </Button>
+                            <Button id='uptd' color="primary" onClick={this.updateForm}>Update Caregiver </Button>
                         </Col>
                     </Row>
                     <br/>
@@ -117,8 +119,6 @@ class CaregiverContainer extends React.Component {
                         <CaregiverForm formType={this.formType} reloadHandler={this.reload}/>
                     </ModalBody>
                 </Modal>
-                
-                
             </div>
         )
 

@@ -16,7 +16,7 @@ class CaregiverForm extends React.Component {
         super(props);
         this.toggleForm = this.toggleForm.bind(this);
         this.reloadHandler = this.props.reloadHandler;
-        this.formType="insert";
+        this.formType=this.props.formType;
         this.state = {
 
             errorStatus: 0,
@@ -25,6 +25,12 @@ class CaregiverForm extends React.Component {
             formIsValid: false,
 
             formControls: {
+            	id: {
+                    value: '',
+                    placeholder: 'ID...',
+                    valid: false,
+                    touched: false,
+                },
                 name: {
                     value: '',
                     placeholder: 'What is your name?...',
@@ -65,6 +71,34 @@ class CaregiverForm extends React.Component {
             }
         };
 
+        
+//        constructor(props) {
+//            super(props);
+//            this.toggleForm = this.toggleForm.bind(this);
+//            this.reloadHandler = this.props.reloadHandler;
+//            this.formType="delete";
+//            this.state = {
+//
+//                errorStatus: 0,
+//                error: null,
+//
+//                formIsValid: false,
+//
+//                formControls: {
+//                    name: {
+//                        value: '',
+//                        placeholder: 'What is your name?...',
+//                        valid: false,
+//                        touched: false,
+//                        validationRules: {
+//                            minLength: 3,
+//                            isRequired: true
+//                        }
+//                    },
+//                }
+//            }
+//        };
+        
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         //this.nameChange=this.nameChange.bind(this);
@@ -179,72 +213,32 @@ class CaregiverForm extends React.Component {
         });
     }
     
-//    updateCaregiver() {
-//        CaregiverService.update(
-//            this.state.currentCaregiver.id,
-//            this.state.currentCaregiver
-//        )
-//            .then(response => {
-//                console.log(response.data);
-//                this.setState({
-//                    message: "Caregiver was updated successfully!"
-//                });
-//            })
-//            .catch(e => {
-//                console.log(e);
-//            });
-//    }
+    updateCaregiver(caregiver) {
+    	console.log(caregiver);
+    	return API_USERS.updateCaregiver(caregiver);
+    }
     
-//    updateCaregiver(caregiver) {
-//        return API_USERS.getCaregivers((result, status, error) => {
-//            if (result !== null && (status === 200 || status === 201)) {
-//            	result=[...result];
-//            	console.log("Successfully got caregivers : " + JSON.stringify(result[0]));
-//            	result.forEach(x=>{
-//            		if(x.name.trim().localeCompare(caregiver.name.trim())===0){
-//            			let requestBody={
-//            				id: x.id,
-//            				name: x.name,
-//            				birthdate: x.birthdate,
-//            				gender: x.gender,
-//            				address: x.address,
-//            				role: x.role,
-//            			}
-//            			console.log("requestBody: " + JSON.stringify(requestBody));
-//            			API_USERS.updateCaregiver(requestBody,(result1, status1, error1)=>{
-//            				if(result1 !== null && (status === 200 || status === 201)){
-//            					console.log("Successfully updated caregiver with id: " + result1.id);
-//            					this.reloadHandler();
-//            				}
-//            				else{
-//            					this.setState(({
-//            	                    errorStatus: status,
-//            	                    error: error
-//            	                }));
-//            				}
-//            			}
-//            		}
-//            	})
-//                
-//            }
-//        });
-//    }
+    deleteCaregiver(caregiver) {
+    	console.log(caregiver);
+    	return API_USERS.deleteCaregiverById(caregiver);
+    }
 
     handleSubmit() {
         let caregiver = {
+            id: this.state.formControls.id.value,
             name: this.state.formControls.name.value,
             birthdate: this.state.formControls.birthdate.value,
             gender: this.state.formControls.gender.value,
             address: this.state.formControls.address.value,
             role :this.state.formControls.role.value
         };
-
-        console.log(caregiver);
+        
+        console.log(caregiver, this.formType);
         switch(this.formType){
         	case "insert":this.registerCaregiver(caregiver);console.log("insert form");break;
-        	//case "delete":this.deleteCaregiver(caregiver);console.log("delete form");break;
-        	//case "update":this.updateCaregiver(caregiver);console.log("update form");break;
-        	default:this.registerCaregiver(caregiver);
+        	case "delete":this.deleteCaregiver(caregiver);console.log("delete form");break;
+        	case "update":this.updateCaregiver(caregiver);console.log("update form");break;
+        	default:this.updateCaregiver(caregiver);
         }
         
     }
@@ -252,11 +246,21 @@ class CaregiverForm extends React.Component {
     render() {
         return (
             <div>
-
+            <FormGroup id='id'>
+            <Label for='idField'> Id: </Label>
+            <Input name='id' id='idField' placeholder={this.state.formControls.id.placeholder}
+                   onChange={this.handleChange}
+                   defaultValue={this.state.formControls.id.value}
+                   touched={this.state.formControls.id.touched? 1 : 0}
+                   valid={this.state.formControls.id.valid}
+                   required
+            />
+            </FormGroup>
+        
                 <FormGroup id='name'>
                     <Label for='nameField'> Name: </Label>
                     <Input name='name' id='nameField' placeholder={this.state.formControls.name.placeholder}
-                           onChange={this.nameChange}
+                           onChange={this.handleChange}
                            defaultValue={this.state.formControls.name.value}
                            touched={this.state.formControls.name.touched? 1 : 0}
                            valid={this.state.formControls.name.valid}
@@ -269,7 +273,7 @@ class CaregiverForm extends React.Component {
                 <FormGroup id='birthdate'>
                     <Label for='birthdateField'> Birthdate: </Label>
                     <Input name='birthdate' id='birthdateField' placeholder={this.state.formControls.birthdate.placeholder}
-                           onChange={this.birthdateChange}
+                           onChange={this.handleChange}
                            defaultValue={this.state.formControls.birthdate.value}
                            touched={this.state.formControls.birthdate.touched? 1 : 0}
                            valid={this.state.formControls.birthdate.valid}
@@ -280,7 +284,7 @@ class CaregiverForm extends React.Component {
                 <FormGroup id='gender'>
                 <Label for='genderField'> Gender: </Label>
                 <Input name='gender' id='genderField' placeholder={this.state.formControls.gender.placeholder}
-                       onChange={this.genderChange}
+                       onChange={this.handleChange}
                        defaultValue={this.state.formControls.gender.value}
                        touched={this.state.formControls.gender.touched? 1 : 0}
                        valid={this.state.formControls.gender.valid}
@@ -291,7 +295,7 @@ class CaregiverForm extends React.Component {
                 <FormGroup id='address'>
                     <Label for='addressField'> Address: </Label>
                     <Input name='address' id='addressField' placeholder={this.state.formControls.address.placeholder}
-                           onChange={this.addressChange}
+                           onChange={this.handleChange}
                            defaultValue={this.state.formControls.address.value}
                            touched={this.state.formControls.address.touched? 1 : 0}
                            valid={this.state.formControls.address.valid}
@@ -302,7 +306,7 @@ class CaregiverForm extends React.Component {
                 <FormGroup id='role'>
                 	<Label for='roleField'> Role: </Label>
                 	<Input name='role' id='roleField' placeholder={this.state.formControls.role.placeholder}
-                		onChange={this.roleChange}
+                		onChange={this.handleChange}
                 		defaultValue={this.state.formControls.role.value}
                 		touched={this.state.formControls.role.touched? 1 : 0}
                 		valid={this.state.formControls.role.valid}
@@ -314,7 +318,7 @@ class CaregiverForm extends React.Component {
 
                     <Row>
                         <Col sm={{size: '4', offset: 8}}>
-                            <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmit}>  Submit </Button>
+                            <Button type={"submit"}  onClick={this.handleSubmit}>  Submit </Button>
                         </Col>
                     </Row>
 

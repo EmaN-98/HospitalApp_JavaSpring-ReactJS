@@ -3,6 +3,10 @@ import Table from "../../commons/tables/table";
 
 
 const columns = [
+	{
+        Header: 'ID',
+        accessor: 'id',
+    },
     {
         Header: 'Name',
         accessor: 'name',
