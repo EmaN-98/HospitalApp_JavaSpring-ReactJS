@@ -39,7 +39,7 @@ function deletePatientById(params, callback){//
 
     console.log(request.url);
     RestApiClient.performRequest(request, function() {
-    	console.log("Delete Succesfull")
+    	console.log("Delete Successfulll")
     	return 0;
     });
 }
