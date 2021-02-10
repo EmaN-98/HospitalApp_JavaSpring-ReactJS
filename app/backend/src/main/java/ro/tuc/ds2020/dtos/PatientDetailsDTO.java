@@ -16,48 +16,60 @@ import javax.validation.constraints.NotNull;
 
 public class PatientDetailsDTO extends RepresentationModel<PatientDetailsDTO> {
     private UUID id;
-    @NotNull
+    //@NotNull
     private String name;
-    @NotNull
+    //@NotNull
     private String birthdate;
-    @NotNull
+   // @NotNull
     private String gender;
-    @NotNull
+   // @NotNull
     private String address;
-    @NotNull
+   // @NotNull
     private String medical_record;
     private String caregiverName;
+    private String doctorName;
     private Doctor doctor;
     private Caregiver caregiver;
     private UserSD user_id;
-    @NotNull
+   // @NotNull
     private String role;
    
     public PatientDetailsDTO() {
     }
 
    
+    public PatientDetailsDTO(PatientDetailsDTO dto) {
+		
+		this.id = dto.getId();
+		this.name = dto.getName();
+		this.birthdate = dto.getBirthdate();
+		this.gender = dto.getGender();
+		this.address = dto.getAddress();
+		this.medical_record=dto.getMedical_record();
+		this.caregiverName=dto.getCaregiverName();
+		this.doctorName=dto.getDoctorName();
+		this.doctor=dto.getDoctor();
+		this.caregiver=dto.getCaregiver();
+		this.role = dto.getRole();
+		this.user_id = new UserSD();
+	}
 
-
-	public PatientDetailsDTO(UUID id, @NotNull String name, @NotNull String birthdate, @NotNull String gender,
-			@NotNull String address, @NotNull String medical_record, String caregiverName, @NotNull String role) {
+	public PatientDetailsDTO(String name, String birthdate, String gender, String address, String medical_record,
+			String role) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.birthdate = birthdate;
 		this.gender = gender;
 		this.address = address;
 		this.medical_record = medical_record;
-		this.caregiverName = caregiverName;
 		this.role = role;
 	}
 
 
 
 
-	public PatientDetailsDTO(@NotNull String name, @NotNull String birthdate, @NotNull String gender,
-			@NotNull String address, @NotNull String medical_record, String caregiverName, Doctor doctor,
-			Caregiver caregiver, @NotNull String role) {
+	public PatientDetailsDTO(String name, String birthdate, String gender, String address, String medical_record,
+			String caregiverName, String doctorName, String role) {
 		super();
 		this.name = name;
 		this.birthdate = birthdate;
@@ -65,16 +77,15 @@ public class PatientDetailsDTO extends RepresentationModel<PatientDetailsDTO> {
 		this.address = address;
 		this.medical_record = medical_record;
 		this.caregiverName = caregiverName;
-		this.doctor = doctor;
-		this.caregiver = caregiver;
+		this.doctorName = doctorName;
 		this.role = role;
 	}
 
 
 
 
-	public PatientDetailsDTO(@NotNull String name, @NotNull String birthdate, @NotNull String gender,
-			@NotNull String address, @NotNull String medical_record, String caregiverName, @NotNull String role) {
+	public PatientDetailsDTO(String name, String birthdate, String gender, String address, String medical_record,
+			String caregiverName, String doctorName, Doctor doctor, Caregiver caregiver, UserSD user_id, String role) {
 		super();
 		this.name = name;
 		this.birthdate = birthdate;
@@ -82,22 +93,7 @@ public class PatientDetailsDTO extends RepresentationModel<PatientDetailsDTO> {
 		this.address = address;
 		this.medical_record = medical_record;
 		this.caregiverName = caregiverName;
-		this.role = role;
-	}
-
-
-
-
-	public PatientDetailsDTO(@NotNull String name, @NotNull String birthdate, @NotNull String gender,
-			@NotNull String address, @NotNull String medical_record, String caregiverName, Doctor doctor,
-			Caregiver caregiver, UserSD user_id, @NotNull String role) {
-		super();
-		this.name = name;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.address = address;
-		this.medical_record = medical_record;
-		this.caregiverName = caregiverName;
+		this.doctorName = doctorName;
 		this.doctor = doctor;
 		this.caregiver = caregiver;
 		this.user_id = user_id;
@@ -107,9 +103,9 @@ public class PatientDetailsDTO extends RepresentationModel<PatientDetailsDTO> {
 
 
 
-	public PatientDetailsDTO(UUID id, @NotNull String name, @NotNull String birthdate, @NotNull String gender,
-			@NotNull String address, @NotNull String medical_record, String caregiverName, Doctor doctor,
-			Caregiver caregiver, UserSD user_id, @NotNull String role) {
+	public PatientDetailsDTO(UUID id, String name, String birthdate, String gender, String address,
+			String medical_record, String caregiverName, String doctorName, Doctor doctor, Caregiver caregiver,
+			UserSD user_id, String role) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -118,10 +114,25 @@ public class PatientDetailsDTO extends RepresentationModel<PatientDetailsDTO> {
 		this.address = address;
 		this.medical_record = medical_record;
 		this.caregiverName = caregiverName;
+		this.doctorName = doctorName;
 		this.doctor = doctor;
 		this.caregiver = caregiver;
 		this.user_id = user_id;
 		this.role = role;
+	}
+
+
+
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+
+
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
 	}
 
 

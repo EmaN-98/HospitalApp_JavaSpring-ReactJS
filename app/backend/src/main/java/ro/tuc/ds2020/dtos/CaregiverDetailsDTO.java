@@ -13,33 +13,66 @@ import javax.validation.constraints.NotNull;
 
 public class CaregiverDetailsDTO extends RepresentationModel<CaregiverDetailsDTO> {
     private UUID id;
-    @NotNull
+   // @NotNull
     private String name;
-    @NotNull
+    //@NotNull
     private String birthdate;
-    @NotNull
+    //@NotNull
     private String gender;
-    @NotNull
+   // @NotNull
     private String address;
-
+  //@NotNull
+    private String role;
     private List<Patient> patients;
 
     private UserSD user_id;
-   @NotNull
-   private String role;
+
+    
+
    
     public String getRole() {
 	return role;
-}
+    }
 
 public void setRole(String role) {
 	this.role = role;
-}
-
-	public CaregiverDetailsDTO() {
-    }
+	}
 
 	
+	public CaregiverDetailsDTO(CaregiverDetailsDTO dto) {
+		
+		this.id = dto.getId();
+		this.name = dto.getName();
+		this.birthdate = dto.getBirthdate();
+		this.gender = dto.getGender();
+		this.address = dto.getAddress();
+		this.role = dto.getRole();
+		//this.patients = dto.getPatients();
+		this.user_id = new UserSD(id,name,role);
+	}
+
+	public CaregiverDetailsDTO(UUID id, String name, String birthdate, String gender, String address, 
+		List<Patient> patients, UserSD user_id,String role) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.birthdate = birthdate;
+	this.gender = gender;
+	this.address = address;
+	this.role = role;
+	this.patients = patients;
+	this.user_id = user_id;
+}
+
+	public CaregiverDetailsDTO(UUID id, String name, String birthdate, String gender, String address, String role) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.birthdate = birthdate;
+	this.gender = gender;
+	this.address = address;
+	this.role = role;
+}
 
 	public CaregiverDetailsDTO(@NotNull String name, @NotNull String birthdate, @NotNull String gender,
 			@NotNull String address, List<Patient> patients, @NotNull String role) {
@@ -64,18 +97,7 @@ public void setRole(String role) {
 		this.role = role;
 	}
 
-	public CaregiverDetailsDTO(UUID id, @NotNull String name, @NotNull String birthdate, @NotNull String gender,
-			@NotNull String address, List<Patient> patients, UserSD user_id, @NotNull String role) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.address = address;
-		this.patients = patients;
-		this.user_id = user_id;
-		this.role = role;
-	}
+	
 
 	public CaregiverDetailsDTO(UUID id, @NotNull String name, @NotNull String birthdate, @NotNull String gender,
 			@NotNull String address, List<Patient> patients, UserSD user_id) {
@@ -89,8 +111,15 @@ public void setRole(String role) {
 		this.user_id = user_id;
 	}
 
-	public CaregiverDetailsDTO(@NotNull String name, @NotNull String birthdate, @NotNull String gender,
-			@NotNull String address, @NotNull String role) {
+
+
+
+
+	public CaregiverDetailsDTO() {
+		super();
+	}
+
+	public CaregiverDetailsDTO(String name, String birthdate, String gender, String address, String role) {
 		super();
 		this.name = name;
 		this.birthdate = birthdate;
@@ -98,6 +127,8 @@ public void setRole(String role) {
 		this.address = address;
 		this.role = role;
 	}
+
+
 
 	public UUID getId() {
 		return id;

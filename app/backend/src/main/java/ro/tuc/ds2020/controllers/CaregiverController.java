@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.tuc.ds2020.dtos.CaregiverDTO;
 import ro.tuc.ds2020.dtos.CaregiverDetailsDTO;
+import ro.tuc.ds2020.dtos.PatientDetailsDTO;
 import ro.tuc.ds2020.entities.Caregiver;
 import ro.tuc.ds2020.services.CaregiverService;
 
@@ -29,42 +30,61 @@ public class CaregiverController {
     public CaregiverController(CaregiverService caregiverService) {
         this.caregiverService = caregiverService;
     }
-
+    @CrossOrigin
     @GetMapping("/getCaregivers")
-    public ResponseEntity<List<CaregiverDTO>> getCaregivers() {
-        List<CaregiverDTO> dtos = caregiverService.findCaregivers();
-        for (CaregiverDTO dto : dtos) {
+    public ResponseEntity<List<CaregiverDetailsDTO>> getCaregivers() {
+        List<CaregiverDetailsDTO> dtos = caregiverService.findCaregivers();
+        for (CaregiverDetailsDTO dto : dtos) {
             Link caregiverLink = linkTo(methodOn(CaregiverController.class)
                     .getCaregiver(dto.getId())).withRel("caregiverDetails");
             dto.add(caregiverLink);
+            
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
-
+    
+    @CrossOrigin
+    @GetMapping("/getPatientsForCaregiver")
+    public ResponseEntity<List<PatientDetailsDTO>> getPatientsForCaregiver(@RequestBody CaregiverDetailsDTO caregiverDTO) {
+        List<PatientDetailsDTO> dtos = caregiverService.findPatientsForCaregiver(caregiverDTO);
+//        for (CaregiverDetailsDTO dto : dtos) {
+//            Link caregiverLink = linkTo(methodOn(CaregiverController.class)
+//                    .getCaregiver(dto.getId())).withRel("caregiverDetails");
+//            dto.add(caregiverLink);
+//            
+//        }
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+    
+    
+    @CrossOrigin
     @PostMapping(value="/insertCaregiver")
-    public ResponseEntity<UUID> insertProsumer(@Valid @RequestBody CaregiverDetailsDTO caregiverDTO) {
+    public ResponseEntity<UUID> insertProsumer(@RequestBody CaregiverDetailsDTO caregiverDTO) {
         UUID caregiverID = caregiverService.insert(caregiverDTO);
         return new ResponseEntity<>(caregiverID, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @GetMapping(value = "/getCaregiver/{id}")
     public ResponseEntity<CaregiverDetailsDTO> getCaregiver(@PathVariable("id") UUID caregiverId) {
         CaregiverDetailsDTO dto = caregiverService.findCaregiverById(caregiverId);////
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        System.out.println(dto.getBirthdate());
+        CaregiverDetailsDTO dto2=new CaregiverDetailsDTO(dto);
+        return new ResponseEntity<>(dto2, HttpStatus.OK);
     }
 
     //TODO: UPDATE, DELETE per resource
-    
-    @DeleteMapping(value = "/deleteCaregiver/{id}")
-    public ResponseEntity<UUID> deleteCaregiver(@PathVariable("id") UUID caregiverId){
-    	caregiverService.deleteById(caregiverId);///-||-
-    	return new ResponseEntity<>(caregiverId, HttpStatus.OK);
+    @CrossOrigin
+    @DeleteMapping(value = "/deleteCaregiver")
+    public ResponseEntity<String> deleteCaregiver(@RequestBody CaregiverDetailsDTO caregiverDT){
+    	caregiverService.deleteById(caregiverDT.getId());///-||-
+    	return new ResponseEntity<>("Delete succesfull!", HttpStatus.OK);
     }
-
-    @PutMapping(value="/updateCaregiver/{id}")
-    public ResponseEntity<UUID> updateCaregiver(@PathVariable("id") UUID caregiverId, @Valid @RequestBody CaregiverDetailsDTO caregiverDTO){
-    	caregiverService.update(caregiverId, caregiverDTO);
-    	return new ResponseEntity<>(caregiverId, HttpStatus.OK);
+    @CrossOrigin
+    @PostMapping(value = "/updateCaregiver")
+    public ResponseEntity<String> updateCaregiver( @RequestBody CaregiverDetailsDTO caregiverDTO){
+    	System.out.println("dadad");
+    	caregiverService.update(caregiverDTO.getId(), caregiverDTO);
+    	return new ResponseEntity<>("Upadte succesful!", HttpStatus.OK);
     }
     	
 }

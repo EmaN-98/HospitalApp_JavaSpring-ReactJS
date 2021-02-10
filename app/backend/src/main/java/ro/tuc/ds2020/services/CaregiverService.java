@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundException;
 import ro.tuc.ds2020.dtos.CaregiverDTO;
 import ro.tuc.ds2020.dtos.CaregiverDetailsDTO;
+import ro.tuc.ds2020.dtos.PatientDetailsDTO;
 import ro.tuc.ds2020.dtos.builders.CaregiverBuilder;
+import ro.tuc.ds2020.dtos.builders.PatientBuilder;
 import ro.tuc.ds2020.entities.Caregiver;
 import ro.tuc.ds2020.entities.Patient;
 import ro.tuc.ds2020.repositories.CaregiverRepository;
@@ -30,7 +32,7 @@ public class CaregiverService {
         this.patientRepository=patientRepository;
     }
 
-    public List<CaregiverDTO> findCaregivers() {
+    public List<CaregiverDetailsDTO> findCaregivers() {
         List<Caregiver> caregiverList = caregiverRepository.findAll();
         for(Caregiver c:caregiverList) {
         	List<Patient> patientsList=patientRepository.getPatientsForCaregiver(c.getName());
@@ -38,8 +40,18 @@ public class CaregiverService {
         }
         
         return caregiverList.stream()
-                .map(CaregiverBuilder::toCaregiverDTO)
+                .map(CaregiverBuilder::toCaregiverDetailsDTO)
                 .collect(Collectors.toList());
+    }
+    
+    public List<PatientDetailsDTO> findPatientsForCaregiver(CaregiverDetailsDTO care) {
+
+        	List<Patient> patientsList=patientRepository.getPatientsForCaregiver(care.getName());
+
+        	return patientsList.stream()
+                    .map(PatientBuilder::toPatientDetailsDTO)
+                    .collect(Collectors.toList());
+
     }
     
     public CaregiverDTO findCaregiverByName(String name) {
@@ -56,11 +68,13 @@ public class CaregiverService {
             LOGGER.error("Caregiver with id {} was not found in db", id);
             throw new ResourceNotFoundException(Caregiver.class.getSimpleName() + " with id: " + id);
         }
+        System.out.println(prosumerOptional.get().getAddress()+"  ..........   "+id);
         return CaregiverBuilder.toCaregiverDetailsDTO(prosumerOptional.get());
     }
 
     public UUID insert(CaregiverDetailsDTO caregiverDTO) {
     	Caregiver caregiver = CaregiverBuilder.toEntity(caregiverDTO);
+    	
     	caregiver =caregiverRepository.save(caregiver);
         LOGGER.debug("Caregiver with id {} was inserted in db", caregiver.getId());
         return caregiver.getId();
@@ -88,13 +102,15 @@ public class CaregiverService {
     
     
     public void update(UUID id,CaregiverDetailsDTO caregiver) {
-   	 Optional<Caregiver> prosumerOptional = caregiverRepository.findById(id);
+    	System.out.println(id.toString());
+   	 	Optional<Caregiver> prosumerOptional = caregiverRepository.findById(id);
+   	 
         if (!prosumerOptional.isPresent()) {
             LOGGER.error("Caregiver with id {} was not found in db", id);
             throw new ResourceNotFoundException(Caregiver.class.getSimpleName() + " with id: " + id);
         }else {
         //	caregiverRepository.update(id,name,birthday,gender,address,patients);
-        	Caregiver c=caregiverRepository.findByName(caregiver.getName());
+        	Caregiver c=prosumerOptional.get();
         	c.setName(caregiver.getName());
         	c.setBirthdate(caregiver.getBirthdate());
         	c.setAddress(caregiver.getAddress());

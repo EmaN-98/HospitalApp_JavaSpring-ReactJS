@@ -19,85 +19,135 @@ public class PatientDTO extends RepresentationModel<PatientDTO> {
  //   @NotNull
     private String name;
  //   @NotNull
-//    private String birthdate;
+    private String birthdate;
  //   @NotNull
-//    private String gender;
+    private String gender;
   //  @NotNull
- //   private String address;
+    private String address;
  //   @NotNull
     private String medical_record;
     private String caregiverName;
-    private Doctor doctor;
-    private Caregiver caregiver;
+    private String doctorName;
+    //private Doctor doctor;
+   // private Caregiver caregiver;
 //    private UserSD user_id;
    
     public PatientDTO() {
     }
 
     
-	public PatientDTO(String name, String medical_record, Doctor doctor, Caregiver caregiver) {
-	super();
-	this.name = name;
-	this.medical_record = medical_record;
-	this.doctor = doctor;
-	this.caregiver = caregiver;
-}
+    
 
-
-	public PatientDTO(UUID id, String name, String medical_record, Doctor doctor, Caregiver caregiver) {
-	super();
-	this.id = id;
-	this.name = name;
-	this.medical_record = medical_record;
-	this.doctor = doctor;
-	this.caregiver = caregiver;
-}
-	
-
-	public PatientDTO(UUID id, String name, String medical_record, String caregiverName) {
+	public PatientDTO(UUID id, String name, String birthdate, String gender, String address, String medical_record) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
 		this.medical_record = medical_record;
-		this.caregiverName = caregiverName;
 	}
 
 
-	public PatientDTO(String name, String medical_record, String caregiverName) {
+
+
+	public PatientDTO(String name, String birthdate, String gender, String address, String medical_record) {
 		super();
 		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
 		this.medical_record = medical_record;
-		this.caregiverName = caregiverName;
 	}
 
 
-	public PatientDTO(String name, String medical_record, String caregiverName, Doctor doctor, Caregiver caregiver) {
+
+
+	public PatientDTO(String name, String birthdate, String gender, String address, String medical_record,
+			String caregiverName, String doctorName) {
 		super();
 		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
 		this.medical_record = medical_record;
 		this.caregiverName = caregiverName;
-		this.doctor = doctor;
-		this.caregiver = caregiver;
+		this.doctorName = doctorName;
 	}
 
 
-	public PatientDTO(UUID id, String name, String medical_record, String caregiverName, Doctor doctor,
-			Caregiver caregiver) {
+
+
+	public PatientDTO(UUID id, String name, String birthdate, String gender, String address, String medical_record,
+			String caregiverName, String doctorName) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
 		this.medical_record = medical_record;
 		this.caregiverName = caregiverName;
-		this.doctor = doctor;
-		this.caregiver = caregiver;
+		this.doctorName = doctorName;
 	}
 
 
-	public PatientDTO(String name, String medical_record) {
-		super();
-		this.name = name;
-		this.medical_record = medical_record;
+
+
+	public String getBirthdate() {
+		return birthdate;
 	}
+
+
+
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+
+
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+
+
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
+
 
 
 	public String getCaregiverName() {
@@ -158,21 +208,21 @@ public class PatientDTO extends RepresentationModel<PatientDTO> {
 		this.medical_record = medical_record;
 	}
 
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-
-	public Caregiver getCaregiver() {
-		return caregiver;
-	}
-
-	public void setCaregiver(Caregiver caregiver) {
-		this.caregiver = caregiver;
-	}
+//	public Doctor getDoctor() {
+//		return doctor;
+//	}
+//
+//	public void setDoctor(Doctor doctor) {
+//		this.doctor = doctor;
+//	}
+//
+//	public Caregiver getCaregiver() {
+//		return caregiver;
+//	}
+//
+//	public void setCaregiver(Caregiver caregiver) {
+//		this.caregiver = caregiver;
+//	}
 
 /*	public UserSD getUser_id() {
 		return user_id;
@@ -191,18 +241,18 @@ public class PatientDTO extends RepresentationModel<PatientDTO> {
         if (o == null || getClass() != o.getClass()) return false;
         PatientDTO patientDTO = (PatientDTO) o;
         return name == patientDTO.name &&
-               // Objects.equals(birthdate, patientDTO.birthdate) &&
-               // Objects.equals(gender, patientDTO.gender) &&
-               // Objects.equals(address, patientDTO.address) &&
-                Objects.equals(medical_record, patientDTO.medical_record) &&
-                Objects.equals(doctor, patientDTO.doctor) &&
-                Objects.equals(caregiver, patientDTO.caregiver)// &&
+                Objects.equals(birthdate, patientDTO.birthdate) &&
+                Objects.equals(gender, patientDTO.gender) &&
+                Objects.equals(address, patientDTO.address) &&
+                Objects.equals(medical_record, patientDTO.medical_record)// &&
+                //Objects.equals(doctor, patientDTO.doctor) &&
+               // Objects.equals(caregiver, patientDTO.caregiver)// &&
                // Objects.equals(user_id, patientDTO.user_id)
                 ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name/*, birthdate, gender, address*/, medical_record, doctor, caregiver/*, user_id*/);
+        return Objects.hash(name/*, birthdate, gender, address*/, medical_record/*, doctor, caregiver, user_id*/);
     }
 }

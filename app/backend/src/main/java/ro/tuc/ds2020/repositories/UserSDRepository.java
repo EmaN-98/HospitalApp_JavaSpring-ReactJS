@@ -14,8 +14,9 @@ public interface UserSDRepository extends JpaRepository<UserSD, UUID> {
     /**
      * Example: JPA generate Query by Field
      */
-    List<UserSD> findByUsername(String username);
+    UserSD findByUsername(String username);
 
+  	Boolean existsByPassword(String password);
     /**
      * Example: Write Custom Query
      */

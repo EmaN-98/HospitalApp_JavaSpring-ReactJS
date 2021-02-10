@@ -16,11 +16,11 @@ public class PatientBuilder {
     }
 
     public static PatientDTO toPatientDTO(Patient patient) {
-        return new PatientDTO(patient.getId(), patient.getName(), patient.getMedical_record(),patient.getCaregiverName());
+        return new PatientDTO(patient.getId(), patient.getName(), patient.getBirthdate(), patient.getGender(), patient.getAddress(), patient.getMedical_record());
     }
 
     public static PatientDetailsDTO toPatientDetailsDTO(Patient patient) {
-        return new PatientDetailsDTO(patient.getId(), patient.getName(), patient.getBirthdate(), patient.getGender(), patient.getAddress(),  patient.getMedical_record(),patient.getCaregiverName(),patient.getRole());
+        return new PatientDetailsDTO(patient.getId(), patient.getName(), patient.getBirthdate(), patient.getGender(), patient.getAddress(),  patient.getMedical_record(),patient.getCaregiverName(),patient.getDoctorName(),patient.getDoctor(),patient.getCaregiver(),patient.getUser_id(),patient.getRole());
     }
 
     public static Patient toEntity(PatientDetailsDTO patientDetailsDTO) {
@@ -30,6 +30,10 @@ public class PatientBuilder {
         		patientDetailsDTO.getAddress(),
         		patientDetailsDTO.getMedical_record(),
         		patientDetailsDTO.getCaregiverName(),
+        		patientDetailsDTO.getDoctorName(),
+        		patientDetailsDTO.getDoctor(),
+        		patientDetailsDTO.getCaregiver(),
+        		patientDetailsDTO.getUser_id(),
         		patientDetailsDTO.getRole());
     }
 }

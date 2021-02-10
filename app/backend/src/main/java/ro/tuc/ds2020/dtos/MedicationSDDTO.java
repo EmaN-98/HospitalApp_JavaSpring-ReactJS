@@ -19,7 +19,7 @@ public class MedicationSDDTO extends RepresentationModel<MedicationSDDTO> {
    // @NotNull
     private String name;
    // @NotNull
-//    private String sideEffects;
+    private String sideEffects;
    // @NotNull
     private String dosage;
    // @NotNull
@@ -31,21 +31,21 @@ public class MedicationSDDTO extends RepresentationModel<MedicationSDDTO> {
     
   
 
-	public MedicationSDDTO(String name, /*String sideEffects,*/ String dosage, String intake_interval) {
+	public MedicationSDDTO(String name, String sideEffects, String dosage, String intake_interval) {
 	super();
 	this.name = name;
-	//this.sideEffects = sideEffects;
+	this.sideEffects = sideEffects;
 	this.dosage = dosage;
 	this.intake_interval = intake_interval;
 }
 
 
 
-	public MedicationSDDTO(UUID id, String name,/* String sideEffects, */String dosage, String intake_interval) {
+	public MedicationSDDTO(UUID id, String name, String sideEffects, String dosage, String intake_interval) {
 		super();
 		this.id = id;
 		this.name = name;
-		//this.sideEffects = sideEffects;
+		this.sideEffects = sideEffects;
 		this.dosage = dosage;
 		this.intake_interval = intake_interval;
 	}
@@ -69,13 +69,13 @@ public class MedicationSDDTO extends RepresentationModel<MedicationSDDTO> {
 		this.name = name;
 	}
 
-	/*public String getSideEffects() {
+	public String getSideEffects() {
 		return sideEffects;
 	}
 
 	public void setSideEffects(String sideEffects) {
 		this.sideEffects = sideEffects;
-	}*/
+	}
 
 	public String getDosage() {
 		return dosage;
@@ -102,7 +102,7 @@ public class MedicationSDDTO extends RepresentationModel<MedicationSDDTO> {
         if (o == null || getClass() != o.getClass()) return false;
         MedicationSDDTO medicationSDDTO = (MedicationSDDTO) o;
         return name == medicationSDDTO.name &&
-               // Objects.equals(sideEffects, medicationSDDTO.sideEffects) &&
+                Objects.equals(sideEffects, medicationSDDTO.sideEffects) &&
                 Objects.equals(dosage, medicationSDDTO.dosage) &&
                 Objects.equals(intake_interval, medicationSDDTO.intake_interval) 
               ;
@@ -110,6 +110,6 @@ public class MedicationSDDTO extends RepresentationModel<MedicationSDDTO> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, /*sideEffects,*/ dosage, intake_interval);
+        return Objects.hash(name, sideEffects, dosage, intake_interval);
     }
 }

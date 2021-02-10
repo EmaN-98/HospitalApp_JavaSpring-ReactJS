@@ -86,7 +86,9 @@ public class DoctorDTO extends RepresentationModel<DoctorDTO> {
 	}*/
 
 
-
+	public String getWhatever() {
+		return "Heeei";
+	}
 
 
 	@Override

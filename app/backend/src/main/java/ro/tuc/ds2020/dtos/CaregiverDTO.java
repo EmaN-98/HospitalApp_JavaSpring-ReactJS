@@ -16,16 +16,25 @@ public class CaregiverDTO extends RepresentationModel<CaregiverDTO> {
    // @NotNull
     private String name;
    // @NotNull
-//    private String birthdate;
+    private String birthdate;
   //  @NotNull
-//    private String gender;
+    private String gender;
   //  @NotNull
-//    private String address;
+    private String address;
    // @NotNull
     private List<Patient> patients;
    // @NotNull
 //    private UserSD user_id;
-   
+    private String role;
+    
+    public String getRole() {
+	return role;
+}
+
+public void setRole(String role) {
+	this.role = role;
+}
+
     public CaregiverDTO() {
     }
 
@@ -53,6 +62,24 @@ public class CaregiverDTO extends RepresentationModel<CaregiverDTO> {
 	//	this.user_id = user_id;
 	}
 
+	public CaregiverDTO(String name, String birthdate, String gender, String address) {
+		super();
+		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
+	}
+
+	public CaregiverDTO(UUID id, String name, String birthdate, String gender, String address, List<Patient> patients) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
+		this.patients = patients;
+	}
+
 	public UUID getId() {
 		return id;
 	}
@@ -69,7 +96,7 @@ public class CaregiverDTO extends RepresentationModel<CaregiverDTO> {
 		this.name = name;
 	}
 
-	/*public String getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
 
@@ -91,7 +118,7 @@ public class CaregiverDTO extends RepresentationModel<CaregiverDTO> {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}*/
+	}
 
 	public List<Patient> getPatients() {
 		return patients;
@@ -110,7 +137,9 @@ public class CaregiverDTO extends RepresentationModel<CaregiverDTO> {
 	}*/
 
     
-
+	//public String getX() {
+	//	return "X";
+	//}
 
 
 	@Override

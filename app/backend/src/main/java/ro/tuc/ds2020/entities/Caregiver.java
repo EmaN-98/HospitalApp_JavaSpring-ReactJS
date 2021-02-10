@@ -87,6 +87,19 @@ public class Caregiver  implements Serializable{
 	}
 	
 
+	public Caregiver(UUID id, String name, String birthdate, String gender, String address, List<Patient> patients,
+			UserSD user_id, String role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
+		this.patients = patients;
+		this.user_id = user_id;
+		this.role = role;
+	}
+
 	public Caregiver(String name, String birthdate, String gender, String address, String role) {
 		super();
 		this.name = name;

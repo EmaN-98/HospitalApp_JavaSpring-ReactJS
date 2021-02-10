@@ -53,13 +53,13 @@ public class MedicationSD {
 			this.medication = medication;
 		}
 
-		/*public Medication( String name,String sideEffects, String dosage, String intake_interval) {
+		public MedicationSD( String name,String sideEffects, String dosage, String intake_interval) {
 			
 			this.name = name;
 			this.sideEffects = sideEffects;
 			this.dosage = dosage;
 			this.intake_interval = intake_interval;
-		}*/
+		}
 
 		public UUID getId() {
 			return id;

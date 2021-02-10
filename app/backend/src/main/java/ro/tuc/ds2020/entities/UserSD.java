@@ -46,6 +46,39 @@ public class UserSD  implements Serializable{
 		this.role = role;
 	}
 
+	public UserSD(UUID id, String username, String password, String role, Doctor doctor, Caregiver caregiver) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.doctor = doctor;
+		this.caregiver = caregiver;
+	}
+
+	public UserSD(UUID id, String username, String password, String role) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+	
+	
+
+	public UserSD(UUID id, String username, String role) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.role = role;
+	}
+
+	public UserSD(String password, String role) {
+		super();
+		this.password = password;
+		this.role = role;
+	}
+
 	public UUID getId() {
 		return id;
 	}

@@ -2,6 +2,8 @@ package ro.tuc.ds2020.dtos;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import ro.tuc.ds2020.entities.UserSD;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,7 +16,14 @@ public class UserSDDetailsDTO extends RepresentationModel<UserSDDetailsDTO> {
     public UserSDDetailsDTO() {
     }
 
-    
+public UserSDDetailsDTO(UserSDDetailsDTO dto) {
+		
+		this.id = dto.getId();
+		this.username = dto.getUsername();
+		this.password = dto.getPassword();
+		this.role = dto.getRole();
+		
+	}
 
     public UserSDDetailsDTO(String username, String password, String role) {
 		super();

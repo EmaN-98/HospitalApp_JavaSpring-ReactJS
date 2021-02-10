@@ -21,7 +21,7 @@ public class CaregiverBuilder {
     }
 
     public static CaregiverDetailsDTO toCaregiverDetailsDTO(Caregiver caregiver) {
-        return new CaregiverDetailsDTO(caregiver.getId(), caregiver.getName(), caregiver.getBirthdate(), caregiver.getGender(), caregiver.getAddress(),  caregiver.getPatients(), caregiver.getUser_id());
+        return new CaregiverDetailsDTO(caregiver.getId(), caregiver.getName(), caregiver.getBirthdate(), caregiver.getGender(), caregiver.getAddress(), caregiver.getPatients(), caregiver.getUser_id(),caregiver.getRole());
     }
 
     public static Caregiver toEntity(CaregiverDetailsDTO caregiverDetailsDTO) {
@@ -30,6 +30,7 @@ public class CaregiverBuilder {
         		caregiverDetailsDTO.getGender(),
         		caregiverDetailsDTO.getAddress(),
         		caregiverDetailsDTO.getPatients(),
-        		caregiverDetailsDTO.getUser_id());
+        		caregiverDetailsDTO.getUser_id(),
+        		caregiverDetailsDTO.getRole());
     }
 }

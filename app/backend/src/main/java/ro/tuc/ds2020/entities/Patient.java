@@ -38,6 +38,9 @@ public class Patient  implements Serializable{
     @Column(name = "caregiverName", nullable = false)
     private String caregiverName;
     
+    @Column(name = "doctorName", nullable = false)
+    private String doctorName;
+    
     @ManyToOne
     @JoinColumn(name = "doctor")
     private Doctor doctor;
@@ -58,38 +61,11 @@ public class Patient  implements Serializable{
 
 	
 
-	public Patient(String name, String birthdate, String gender, String address, String medical_record,
-			String caregiverName, String role) {
-		super();
-		this.name = name;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.address = address;
-		this.medical_record = medical_record;
-		this.caregiverName = caregiverName;
-		this.role = role;
-	}
-
-
-
-	public Patient(String name, String birthdate, String gender, String address, String medical_record,
-			String caregiverName, Doctor doctor, Caregiver caregiver, String role) {
-		super();
-		this.name = name;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.address = address;
-		this.medical_record = medical_record;
-		this.caregiverName = caregiverName;
-		this.doctor = doctor;
-		this.caregiver = caregiver;
-		this.role = role;
-	}
 
 
 
 	public Patient(UUID id, String name, String birthdate, String gender, String address, String medical_record,
-			String caregiverName, Doctor doctor, Caregiver caregiver, UserSD user_id, String role) {
+			String caregiverName, String doctorName, String role) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -98,11 +74,73 @@ public class Patient  implements Serializable{
 		this.address = address;
 		this.medical_record = medical_record;
 		this.caregiverName = caregiverName;
+		this.doctorName = doctorName;
+		this.role = role;
+	}
+
+
+
+
+
+
+	public Patient(String name, String birthdate, String gender, String address, String medical_record,
+			String caregiverName, String doctorName, Doctor doctor, Caregiver caregiver, UserSD user_id, String role) {
+		super();
+		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
+		this.medical_record = medical_record;
+		this.caregiverName = caregiverName;
+		this.doctorName = doctorName;
 		this.doctor = doctor;
 		this.caregiver = caregiver;
 		this.user_id = user_id;
 		this.role = role;
 	}
+
+
+
+
+
+
+	public Patient(UUID id, String name, String birthdate, String gender, String address, String medical_record,
+			String caregiverName, String doctorName, Doctor doctor, Caregiver caregiver, UserSD user_id, String role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
+		this.medical_record = medical_record;
+		this.caregiverName = caregiverName;
+		this.doctorName = doctorName;
+		this.doctor = doctor;
+		this.caregiver = caregiver;
+		this.user_id = user_id;
+		this.role = role;
+	}
+
+
+
+
+
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+
+
+
+
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
+
+
 
 
 

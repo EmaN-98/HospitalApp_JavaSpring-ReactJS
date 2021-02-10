@@ -16,13 +16,13 @@ import javax.validation.constraints.NotNull;
 
 public class MedicationSDDetailsDTO extends RepresentationModel<MedicationSDDetailsDTO> {
     private UUID id;
-    @NotNull
+   // @NotNull
     private String name;
-    @NotNull
+   // @NotNull
     private String sideEffects;
-    @NotNull
+   // @NotNull
     private String dosage;
-    @NotNull
+   // @NotNull
     private String intake_interval;
  //   private MedicationSD medication;
    
@@ -30,18 +30,8 @@ public class MedicationSDDetailsDTO extends RepresentationModel<MedicationSDDeta
     }
     
    
-	/*public Medication( String name,String sideEffects, String dosage, String intake_interval) {
-		
-		this.name = name;
-		this.sideEffects = sideEffects;
-		this.dosage = dosage;
-		this.intake_interval = intake_interval;
-	}*/
-
-	
-
-	public MedicationSDDetailsDTO(@NotNull String name, @NotNull String sideEffects, @NotNull String dosage,
-			@NotNull String intake_interval) {
+    
+	public MedicationSDDetailsDTO( String name,String sideEffects, String dosage, String intake_interval) {
 		super();
 		this.name = name;
 		this.sideEffects = sideEffects;
@@ -49,9 +39,9 @@ public class MedicationSDDetailsDTO extends RepresentationModel<MedicationSDDeta
 		this.intake_interval = intake_interval;
 	}
 
-
-	public MedicationSDDetailsDTO(UUID id, @NotNull String name, @NotNull String sideEffects, @NotNull String dosage,
-			@NotNull String intake_interval) {
+	
+	public MedicationSDDetailsDTO(UUID id,  String name,  String sideEffects,  String dosage,
+			 String intake_interval) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -60,6 +50,16 @@ public class MedicationSDDetailsDTO extends RepresentationModel<MedicationSDDeta
 		this.intake_interval = intake_interval;
 	}
 
+	public MedicationSDDetailsDTO(MedicationSDDetailsDTO dto) {
+		
+		this.id = dto.getId();
+		this.name = dto.getName();
+		this.dosage = dto.getDosage();
+		this.sideEffects = dto.getSideEffects();
+		this.intake_interval = dto.getIntake_interval();
+	
+	}
+	
 	public UUID getId() {
 		return id;
 	}

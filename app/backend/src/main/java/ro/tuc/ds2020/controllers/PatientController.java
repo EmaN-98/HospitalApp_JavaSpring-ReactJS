@@ -6,9 +6,12 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import ro.tuc.ds2020.dtos.PatientDetailsDTO;
 import ro.tuc.ds2020.dtos.PatientDTO;
 import ro.tuc.ds2020.dtos.PatientDetailsDTO;
 import ro.tuc.ds2020.entities.Patient;
+import ro.tuc.ds2020.services.PatientService;
 import ro.tuc.ds2020.services.PatientService;
 
 import javax.validation.Valid;
@@ -29,30 +32,55 @@ public class PatientController {
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
     }
-
-    @GetMapping()
-    public ResponseEntity<List<PatientDTO>> getPatients() {
-        List<PatientDTO> dtos = patientService.findPatients();
-        for (PatientDTO dto : dtos) {
+    @CrossOrigin
+    @GetMapping("/getPatients")
+    public ResponseEntity<List<PatientDetailsDTO>> getPatients() {
+        List<PatientDetailsDTO> dtos = patientService.findPatients();
+        for (PatientDetailsDTO dto : dtos) {
             Link patientLink = linkTo(methodOn(PatientController.class)
                     .getPatient(dto.getId())).withRel("patientDetails");
             dto.add(patientLink);
+            
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
-
-    @PostMapping()
-    public ResponseEntity<UUID> insertProsumer(@Valid @RequestBody PatientDetailsDTO patientDTO) {
+    @CrossOrigin
+    @PostMapping(value="/insertPatient")
+    public ResponseEntity<UUID> insertProsumer(@RequestBody PatientDetailsDTO patientDTO) {
         UUID patientID = patientService.insert(patientDTO);
         return new ResponseEntity<>(patientID, HttpStatus.CREATED);
     }
-
-    @GetMapping(value = "/{id}")
+    @CrossOrigin
+    @GetMapping(value = "/getPatient/{id}")
     public ResponseEntity<PatientDetailsDTO> getPatient(@PathVariable("id") UUID patientId) {
-        PatientDetailsDTO dto = patientService.findPatientById(patientId);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        PatientDetailsDTO dto = patientService.findPatientById(patientId);////
+        System.out.println(dto.getBirthdate());
+        PatientDetailsDTO dto2=new PatientDetailsDTO(dto);
+        return new ResponseEntity<>(dto2, HttpStatus.OK);
+    }
+    
+    @CrossOrigin
+    @GetMapping(value = "/getDetailsForPatient/{id}")
+    public ResponseEntity<PatientDetailsDTO> getDetailsForPatient(@PathVariable("id") UUID patientId) {
+        PatientDetailsDTO dto = patientService.findPatientById(patientId);////
+        System.out.println(dto.getBirthdate());
+        PatientDetailsDTO dto2=new PatientDetailsDTO(dto);
+        return new ResponseEntity<>(dto2, HttpStatus.OK);
     }
 
     //TODO: UPDATE, DELETE per resource
-
+    @CrossOrigin
+    @DeleteMapping(value = "/deletePatient")
+    public ResponseEntity<String> deletePatient(@RequestBody PatientDetailsDTO patientDT){
+    	patientService.deleteById(patientDT.getId());///-||-
+    	return new ResponseEntity<>("Delete succesfull!", HttpStatus.OK);
+    }
+    @CrossOrigin
+    @PostMapping(value = "/updatePatient")
+    public ResponseEntity<String> updatePatient( @RequestBody PatientDetailsDTO patientDTO){
+    	System.out.println("dadad");
+    	patientService.update(patientDTO.getId(), patientDTO);
+    	return new ResponseEntity<>("Upadte succesful!", HttpStatus.OK);
+    }
+    	
 }
