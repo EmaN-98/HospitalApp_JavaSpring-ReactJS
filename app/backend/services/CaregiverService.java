@@ -44,9 +44,9 @@ public class CaregiverService {
                 .collect(Collectors.toList());
     }
     
-    public List<PatientDetailsDTO> findPatientsForCaregiver(CaregiverDetailsDTO care) {
+    public List<PatientDetailsDTO> findPatientsForCaregiver(String care) {
 
-        	List<Patient> patientsList=patientRepository.getPatientsForCaregiver(care.getName());
+        	List<Patient> patientsList=patientRepository.getPatientsForCaregiver(care);
 
         	return patientsList.stream()
                     .map(PatientBuilder::toPatientDetailsDTO)

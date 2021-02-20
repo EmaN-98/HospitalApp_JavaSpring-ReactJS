@@ -3,9 +3,9 @@ import validate from "./validators/login-validators";
 import Button from "react-bootstrap/Button";
 import * as API_USERS from "../api/login-api";
 import APIResponseErrorMessage from "../../commons/errorhandling/api-response-error-message";
-import {Col, Row} from "reactstrap";
+import {Col, Row, NavLink} from "reactstrap";
 import { FormGroup, Input, Label} from 'reactstrap';
-
+import { Redirect } from 'react-router'
 
 
 
@@ -18,6 +18,8 @@ class LoginForm extends React.Component {
         this.formType=this.props.formType;
         this.state = {
 
+        	toDoctor:true,
+        		
             errorStatus: 0,
             error: null,
 
@@ -88,22 +90,29 @@ class LoginForm extends React.Component {
 
     };
 
-
-    
-    
+   
     loginUser(login){
-    	console.log("in form:"+login);
-    	return API_USERS.loginUser(login,(result, status, error) => {
-          if (result !== null && (status === 200 || status === 201)) {
-          console.log("Success at login:  " + result);
-          this.reloadHandler();
-      } else {
-          this.setState(({
-              errorStatus: status,
-              error: error
-          }));
-      }
-  });
+    	console.log("in form:"+login.username);
+    	return API_USERS.loginUser(login, (result, status, error) => {
+			if (result !== null && status === 200) {
+    		if(login.role === 'caregiver') {
+    			localStorage.setItem('type', "caregiver");
+    			localStorage.setItem('name', login.username);
+    			window.location.href='/rolecaregiver'
+    		}
+    		else if(login.role === 'doctor') {
+    			localStorage.setItem('type', "doctor");
+    			localStorage.setItem('name', login.username);
+    			window.location.href='/'
+    		}
+    		else if(login.role === 'patient'){
+    			localStorage.setItem('type', "patient");
+    			localStorage.setItem('name', login.username);
+    			window.location.href='/rolepatient'
+    		}
+    		console.log(login.role);
+			}
+    	})
     }
     
     registerUser(login){
@@ -120,6 +129,9 @@ class LoginForm extends React.Component {
         };
         
         console.log(login, this.formType);
+       // let response = this.loginUser(login);console.log("login form");
+        //console.log(response)
+       // return response;
         switch(this.formType){
         	case "login":this.loginUser(login);console.log("login form");break;
         	case "register":this.registerUser(login);console.log("register form");break;
@@ -128,8 +140,12 @@ class LoginForm extends React.Component {
         
     }
 
+    
+
+    
     render() {
         return (
+        		
             <div>
             
                 <FormGroup id='username'>

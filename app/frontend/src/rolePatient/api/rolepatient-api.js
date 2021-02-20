@@ -9,15 +9,15 @@ const endpoint = {
 
 
 function getDetailsForPatient(params, callback) {
-    let request = new Request(HOST.backend_api + endpoint.patient + params.id, {
+	let name = localStorage.getItem('name');
+    let request = new Request(HOST.backend_api + endpoint.patient + "/" + name, {
         method: 'GET',
     });
-    console.log(request.url);
-    RestApiClient.performRequest(request, callback);
+    RestApiClient.performRequest(request, callback)
 }
 
 
 
 export {
-	getPatientsForCaregiver
+	getDetailsForPatient
 };

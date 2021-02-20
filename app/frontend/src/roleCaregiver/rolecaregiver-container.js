@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 import * as API_USERS from "./api/rolecaregiver-api"
 import RolecaregiverTable from "./components/rolecaregiver-table";
+//import RolecaregiverForm from "./components/rolecaregiver-form";
 
 
 
@@ -19,7 +20,7 @@ class RolecaregiverContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.toggleForm = this.toggleForm.bind(this);
+      //  this.toggleForm = this.toggleForm.bind(this);
         this.reload = this.reload.bind(this);
         this.formType="rolecaregiver"
         this.state = {
@@ -37,32 +38,28 @@ class RolecaregiverContainer extends React.Component {
     }
 
     fetchRolecaregivers() {
-        return API_USERS.getPatientsForCaregiver((result, status, err) => {
+    	let name = localStorage.getItem("name")
 
-            if (result !== null && status === 200) {
-                this.setState({
-                    tableData: result,
-                    isLoaded: true
-                });
-            } else {
-                this.setState(({
-                    errorStatus: status,
-                    error: err
-                }));
-            }
-        });
+    	let currentConstr = this;
+    	return API_USERS.getPatientsForCaregiver(undefined, function(json, status, err) {
+           console.log("DADA")
+    		currentConstr.setState({
+               tableData: json,
+               isLoaded: true
+           });
+    	})
     }
 
-    toggleForm() {
-        this.setState({selected: !this.state.selected});
-    }
+//    toggleForm() {
+//        this.setState({selected: !this.state.selected});
+//    }
 
 
     reload() {
         this.setState({
             isLoaded: false
         });
-        this.toggleForm();
+       // this.toggleForm();
         this.fetchRolecaregivers();
     }
 
@@ -75,15 +72,7 @@ class RolecaregiverContainer extends React.Component {
                     <strong> Rolecaregiver Management </strong>
                 </CardHeader>
                 <Card>
-                    <br/>
-//                    <Row>
-//                        <Col sm={{size: '8', offset: 1}}>
-//                            <Button id='insrt' color="primary" onClick={this.insertForm}>Insert Rolecaregiver </Button>
-//                            <Button id='dlt' color="primary" onClick={this.deleteForm}>Delete Rolecaregiver </Button>
-//                            <Button id='uptd' color="primary" onClick={this.updateForm}>Update Rolecaregiver </Button>
-//                        </Col>
-//                    </Row>
-                    <br/>
+        
                     <Row>
                         <Col sm={{size: '8', offset: 1}}>
                             {this.state.isLoaded && <RolecaregiverTable tableData = {this.state.tableData}/>}
@@ -95,13 +84,7 @@ class RolecaregiverContainer extends React.Component {
                     </Row>
                 </Card>
 
-                <Modal isOpen={this.state.selected} toggle={this.toggleForm}
-                       className={this.props.className} size="lg">
-                    <ModalHeader toggle={this.toggleForm}> Rolecaregiver: </ModalHeader>
-                    <ModalBody>
-                        <RolecaregiverForm formType={this.formType} reloadHandler={this.reload}/>
-                    </ModalBody>
-                </Modal>
+                
             </div>
         )
 

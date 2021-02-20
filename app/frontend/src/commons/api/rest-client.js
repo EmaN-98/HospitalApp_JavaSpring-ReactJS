@@ -1,9 +1,10 @@
 function performRequest(request, callback){
+	//console.log(callback)
     fetch(request)
         .then(
             function(response) {
                 if (response.ok) {
-                    response.json().then(json => callback(json, response.status,null));
+                    response.json().then(json => callback(json, response.status, null));
                 }
                 else {
                     response.json().then(err => callback(null, response.status,  err));

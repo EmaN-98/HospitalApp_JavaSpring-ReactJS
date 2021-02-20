@@ -40,7 +40,10 @@ public class UserSDService {
     public String findUser(String username, String password, String role) {
     	UserSD user=null;
     	user=userSDRepository.findByUsername(username);
-    	if(user!=null && user.getPassword()==password && user.getRole()==role) {
+    	System.out.println("0000000000"+user.getUsername()+"0000"+user.getId());
+    	System.out.println(user.getUsername()+" "+user.getPassword()+" "+user.getRole()+" "+user.getId());
+    	System.out.println(username+" "+password+" "+role);
+    	if(user!=null && user.getPassword().equals(password) && user.getRole().equals(role)) {
     		return "found";
     	}
     	else return "not found";

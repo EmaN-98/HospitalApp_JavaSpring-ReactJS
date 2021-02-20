@@ -13,13 +13,13 @@ import {
 import * as API_USERS from "./api/rolepatient-api"
 import RolepatientTable from "./components/rolepatient-table";
 
-
+import RestApiClient from "../commons/api/rest-client";
 
 class RolepatientContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.toggleForm = this.toggleForm.bind(this);
+        //this.toggleForm = this.toggleForm.bind(this);
         this.reload = this.reload.bind(this);
         this.formType="rolepatient"
         this.state = {
@@ -37,32 +37,46 @@ class RolepatientContainer extends React.Component {
     }
 
     fetchRolepatients() {
-        return API_USERS.getDetailsForPatient((result, status, err) => {
-
-            if (result !== null && status === 200) {
-                this.setState({
-                    tableData: result,
-                    isLoaded: true
-                });
-            } else {
-                this.setState(({
-                    errorStatus: status,
-                    error: err
-                }));
-            }
-        });
+    	let name = localStorage.getItem("name")
+//    	this.setState({
+//            tableData: [{"id":"2a119c13-cb18-4c3c-a5be-e78e48dda8ae","name":"p","birthdate":"p","gender":"p","address":"p","medical_record":"p","caregiverName":"p","doctorName":"p","role":"patient"}],
+//            isLoaded: true
+//        });
+    	let currentConstr = this;
+    	return API_USERS.getDetailsForPatient(undefined, function(json, status, err) {
+           console.log("DADA")
+    		currentConstr.setState({
+               tableData: [json],
+               isLoaded: true
+           });
+    	})
+    	
     }
+//        return API_USERS.getDetailsForPatient((result, status, err) => {
+//        	console.log(result)
+//            if (result !== null && status === 200) {
+//                this.setState({
+//                    tableData: result,
+//                    isLoaded: true
+//                });
+//            } else {
+//                this.setState(({
+//                    errorStatus: status,
+//                    error: err
+//                }));
+//            }
+//        });
 
-    toggleForm() {
-        this.setState({selected: !this.state.selected});
-    }
-
+//    toggleForm() {
+//        this.setState({selected: !this.state.selected});
+//    }
+//
 
     reload() {
         this.setState({
             isLoaded: false
         });
-        this.toggleForm();
+      //  this.toggleForm();
         this.fetchRolepatients();
     }
 
@@ -75,15 +89,7 @@ class RolepatientContainer extends React.Component {
                     <strong> Rolepatient Management </strong>
                 </CardHeader>
                 <Card>
-                    <br/>
-//                    <Row>
-//                        <Col sm={{size: '8', offset: 1}}>
-//                            <Button id='insrt' color="primary" onClick={this.insertForm}>Insert Rolepatient </Button>
-//                            <Button id='dlt' color="primary" onClick={this.deleteForm}>Delete Rolepatient </Button>
-//                            <Button id='uptd' color="primary" onClick={this.updateForm}>Update Rolepatient </Button>
-//                        </Col>
-//                    </Row>
-                    <br/>
+                    
                     <Row>
                         <Col sm={{size: '8', offset: 1}}>
                             {this.state.isLoaded && <RolepatientTable tableData = {this.state.tableData}/>}
@@ -95,13 +101,8 @@ class RolepatientContainer extends React.Component {
                     </Row>
                 </Card>
 
-                <Modal isOpen={this.state.selected} toggle={this.toggleForm}
-                       className={this.props.className} size="lg">
-                    <ModalHeader toggle={this.toggleForm}> Rolepatient: </ModalHeader>
-                    <ModalBody>
-                        <RolepatientForm formType={this.formType} reloadHandler={this.reload}/>
-                    </ModalBody>
-                </Modal>
+
+
             </div>
         )
 

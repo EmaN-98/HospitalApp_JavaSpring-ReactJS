@@ -16,6 +16,15 @@ const textStyle = {
     textDecoration: 'none'
 };
 
+const isDoctorType = function() {
+	let typeData = localStorage.getItem('type');
+	if(typeData === 'doctor') {
+		return true;
+	}
+	return false;
+}
+
+
 const NavigationBar = () => (
     <div>
         <Navbar color="dark" light expand="md">
@@ -31,6 +40,7 @@ const NavigationBar = () => (
                     </DropdownToggle>
                     <DropdownMenu right >
 
+                    
                         <DropdownItem>
                             <NavLink href="/person">Persons</NavLink>
                         </DropdownItem>
@@ -46,8 +56,6 @@ const NavigationBar = () => (
                     	<DropdownItem>
                 			<NavLink href="/medication">Medication</NavLink>
                 		</DropdownItem>
-
-
                     </DropdownMenu>
                 </UncontrolledDropdown>
 

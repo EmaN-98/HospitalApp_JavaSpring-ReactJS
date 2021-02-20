@@ -34,20 +34,21 @@ public class UserSDController {
 	        this.userSDService = userSDService;
 	    }
 	 
-	 	@CrossOrigin
-	    @GetMapping(value = "/loginUser")
+	 	//@CrossOrigin
+	 	@PostMapping(value = "/loginUser")
 	    public ResponseEntity<?> getUserSD(@RequestBody UserSDDetailsDTO userSDDTO) {
 		 System.out.println("---------controller: "+userSDDTO.toString());
 	        String ok = userSDService.findUser(userSDDTO.getUsername(),userSDDTO.getPassword(),userSDDTO.getRole());
-	        System.out.println("---------controller: founnnnd/not");////
+	      //  System.out.println("---------controller: founnnnd/not");////
 	        if(ok=="found") return new ResponseEntity<>(userSDDTO.getRole(),HttpStatus.OK);
-	        else return new ResponseEntity<>(new Msg("UserIncorrect"),HttpStatus.OK);
+	     //   if(ok=="found") return new ResponseEntity<>(new Msg("DADADADA"),HttpStatus.OK);
+	        else return new ResponseEntity<>("UserIncorrect",HttpStatus.OK);
 	    }
 	 
-	 	@CrossOrigin
+	 	//@CrossOrigin
 	    @PostMapping(value="/registerUser")
 	    public ResponseEntity<UUID> insertProsumer(@RequestBody UserSDDetailsDTO userSDDTO) {
-		 System.out.println("***********controller: "+userSDDTO.toString());
+		// System.out.println("***********controller: "+userSDDTO.toString());
 	        UUID userSDID = userSDService.insert(userSDDTO);
 	        return new ResponseEntity<>(userSDID, HttpStatus.CREATED);
 	    }

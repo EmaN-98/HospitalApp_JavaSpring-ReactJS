@@ -44,15 +44,9 @@ public class CaregiverController {
     }
     
     @CrossOrigin
-    @GetMapping("/getPatientsForCaregiver")
-    public ResponseEntity<List<PatientDetailsDTO>> getPatientsForCaregiver(@RequestBody CaregiverDetailsDTO caregiverDTO) {
-        List<PatientDetailsDTO> dtos = caregiverService.findPatientsForCaregiver(caregiverDTO);
-//        for (CaregiverDetailsDTO dto : dtos) {
-//            Link caregiverLink = linkTo(methodOn(CaregiverController.class)
-//                    .getCaregiver(dto.getId())).withRel("caregiverDetails");
-//            dto.add(caregiverLink);
-//            
-//        }
+    @GetMapping("/getPatientsForCaregiver/{name}")
+    public ResponseEntity<List<PatientDetailsDTO>> getPatientsForCaregiver(@PathVariable("name") String name) {
+        List<PatientDetailsDTO> dtos = caregiverService.findPatientsForCaregiver(name);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
     

@@ -64,6 +64,24 @@ public class Patient  implements Serializable{
 
 
 
+	public Patient(String name, String birthdate, String gender, String address, String medical_record,
+			String caregiverName, String doctorName, String role) {
+		super();
+		this.name = name;
+		this.birthdate = birthdate;
+		this.gender = gender;
+		this.address = address;
+		this.medical_record = medical_record;
+		this.caregiverName = caregiverName;
+		this.doctorName = doctorName;
+		this.role = role;
+	}
+
+
+
+
+
+
 	public Patient(UUID id, String name, String birthdate, String gender, String address, String medical_record,
 			String caregiverName, String doctorName, String role) {
 		super();

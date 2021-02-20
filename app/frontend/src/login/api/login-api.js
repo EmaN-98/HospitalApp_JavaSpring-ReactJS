@@ -20,11 +20,7 @@ function loginUser(login, callback){
     });
 
     console.log("api URL: " + request.url);
-
-    RestApiClient.performRequest(request, function() {
-    	console.log("Request done!")
-    	return "SUCCES";
-    });
+    RestApiClient.performRequest(request, callback)
 }
 
 function registerUser(login, callback){

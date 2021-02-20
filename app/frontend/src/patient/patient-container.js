@@ -38,7 +38,6 @@ class PatientContainer extends React.Component {
 
     fetchPatients() {
         return API_USERS.getPatients((result, status, err) => {
-
             if (result !== null && status === 200) {
                 this.setState({
                     tableData: result,

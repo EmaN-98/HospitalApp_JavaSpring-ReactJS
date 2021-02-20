@@ -7,8 +7,9 @@ const endpoint = {
     patient: '/caregiver/getPatientsForCaregiver'
 };
 
-function getPatientsForCaregiver(callback) {
-    let request = new Request(HOST.backend_api + endpoint.patient, {
+function getPatientsForCaregiver(params, callback) {
+	let name = localStorage.getItem("name");
+    let request = new Request(HOST.backend_api + endpoint.patient + "/" + name , {
         method: 'GET',
     });
     console.log(request.url);

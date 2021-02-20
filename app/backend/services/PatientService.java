@@ -50,13 +50,7 @@ public class PatientService {
                 .collect(Collectors.toList());
     }
     
-    public PatientDTO findPatientByName(String name) {
-        Optional<Patient> prosumerOptional = Optional.ofNullable(patientRepository.findByName(name));
-        if (!prosumerOptional.isPresent()) {
-            throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with name: " + name);
-        }
-        return PatientBuilder.toPatientDTO(prosumerOptional.get());
-    }
+  
     
     public PatientDetailsDTO findPatientById(UUID id) {
         Optional<Patient> prosumerOptional = patientRepository.findById(id);
@@ -65,6 +59,25 @@ public class PatientService {
             throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with id: " + id);
         }
         System.out.println(prosumerOptional.get().getAddress()+"  ..........   "+id);
+        return PatientBuilder.toPatientDetailsDTO(prosumerOptional.get());
+    }
+//    
+//    public PatientDTO findPatientByName(String name) {
+//        Optional<Patient> prosumerOptional = Optional.ofNullable(patientRepository.findByName(name));
+//        if (!prosumerOptional.isPresent()) {
+//            throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with name: " + name);
+//        }
+//        return PatientBuilder.toPatientDTO(prosumerOptional.get());
+//    }
+//    
+    public PatientDetailsDTO findPatientByName(String name) {
+        Optional<Patient> prosumerOptional = Optional.ofNullable(patientRepository.findByName(name));
+        if (!prosumerOptional.isPresent()) {
+            LOGGER.error("Patient with name {} was not found in db", name);
+            System.out.println("  ..........");
+            throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with name: " + name);
+        }
+        System.out.println(prosumerOptional.get().getAddress()+"  ..........   "+name);
         return PatientBuilder.toPatientDetailsDTO(prosumerOptional.get());
     }
 

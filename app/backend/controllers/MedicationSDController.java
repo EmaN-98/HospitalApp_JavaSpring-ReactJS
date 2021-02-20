@@ -67,7 +67,7 @@ public class MedicationSDController {
     @CrossOrigin
     @PostMapping(value = "/updateMedicationSD")
     public ResponseEntity<String> updateMedicationSD( @RequestBody MedicationSDDetailsDTO medicationSDDTO){
-    	System.out.println("dadad");
+    	//System.out.println("da");
     	medicationSDService.update(medicationSDDTO.getId(), medicationSDDTO);
     	return new ResponseEntity<>("Upadte succesful!", HttpStatus.OK);
     }

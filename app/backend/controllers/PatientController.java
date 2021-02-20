@@ -60,10 +60,11 @@ public class PatientController {
     }
     
     @CrossOrigin
-    @GetMapping(value = "/getDetailsForPatient/{id}")
-    public ResponseEntity<PatientDetailsDTO> getDetailsForPatient(@PathVariable("id") UUID patientId) {
-        PatientDetailsDTO dto = patientService.findPatientById(patientId);////
-        System.out.println(dto.getBirthdate());
+    @GetMapping(value = "/getDetailsForPatient/{name}")
+    public ResponseEntity<PatientDetailsDTO> getDetailsForPatient(@PathVariable("name") String name) {
+    	//System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+        PatientDetailsDTO dto = patientService.findPatientByName(name);////
+        //System.out.println(dto.getBirthdate());
         PatientDetailsDTO dto2=new PatientDetailsDTO(dto);
         return new ResponseEntity<>(dto2, HttpStatus.OK);
     }

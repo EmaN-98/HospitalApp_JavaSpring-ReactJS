@@ -12,11 +12,13 @@ import {
 } from 'reactstrap';
 import LoginForm from "./components/login-form";
 import * as API_USERS from "./api/login-api"
-
-
+//import { Redirect } from 'react-router'
+import ReactDOM from 'react-dom';
+import createRoutes from '../routes';
 
 class LoginContainer extends React.Component {
 
+	
     constructor(props) {
         super(props);
         this.toggleForm = this.toggleForm.bind(this);
@@ -32,26 +34,14 @@ class LoginContainer extends React.Component {
     }
 
     componentDidMount() {
-        //this.fetchLogins();
+    	
     }
-
-//    fetchLogins() {
-//        return API_USERS.getLogins((result, status, err) => {
-//
-//            if (result !== null && status === 200) {
-//                this.setState({
-//                    tableData: result,
-//                    isLoaded: true
-//                });
-//            } else {
-//                this.setState(({
-//                    errorStatus: status,
-//                    error: err
-//                }));
-//            }
-//        });
-//    }
-
+    
+ //   ReactDOM.render(
+//		    <Router history={browserHistory} routes={routes} />,
+//		    document.getElementById('root')
+//		);
+    
     toggleForm() {
         this.setState({selected: !this.state.selected});
     }
@@ -65,12 +55,13 @@ class LoginContainer extends React.Component {
         //this.fetchLogins();
     }
 
-    insertForm = ()=>{
+    loginForm = ()=>{
     	this.formType="login";
     	this.toggleForm();
+    	
     }
     
-    deleteForm = ()=>{
+    registerForm = ()=>{
     	this.formType="register";
     	this.toggleForm();
     }
@@ -85,8 +76,8 @@ class LoginContainer extends React.Component {
                     <br/>
                     <Row>
                         <Col sm={{size: '8', offset: 1}}>
-                            <Button id='loginBtn' color="primary" onClick={this.insertForm}>Login User </Button>
-                            <Button id='registerBtn' color="primary" onClick={this.deleteForm}>Register User </Button>
+                            <Button id='loginBtn' color="primary" onClick={this.loginForm}>Login User </Button>
+                            <Button id='registerBtn' color="primary" onClick={this.registerForm}>Register User </Button>
                             
                         </Col>
                     </Row>
